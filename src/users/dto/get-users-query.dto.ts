@@ -18,6 +18,7 @@ export class GetUsersQueryDto {
   @IsOptional()
   @IsNumber()
   @Min(0)
+  @Max(60)
   @Type(() => Number)
   delay?: number;
 }

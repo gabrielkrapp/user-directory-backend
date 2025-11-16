@@ -51,7 +51,7 @@ Returns paginated user list.
 **Query params:**
 - `page` (number, default: 1)
 - `perPage` (number, default: 6, max: 100)
-- `delay` (number, optional) - adds delay to response
+- `delay` (number, optional, max: 60) - adds delay in seconds to response
 
 **Examples:**
 ```bash

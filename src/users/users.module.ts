@@ -6,7 +6,7 @@ import { UsersService } from './users.service';
 @Module({
   imports: [
     HttpModule.register({
-      timeout: 10000,
+      timeout: 120000, // 2 minutes to support large delay values
       maxRedirects: 5,
     }),
   ],
