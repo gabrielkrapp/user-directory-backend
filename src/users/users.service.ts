@@ -32,9 +32,13 @@ export class UsersService {
       per_page: perPage,
     };
 
+    if (query.delay !== undefined) {
+      params.delay = query.delay;
+    }
+
     try {
       this.logger.log(
-        `Fetching users from ReqRes API: page=${page}, per_page=${perPage}${query.delay !== undefined ? `, delay=${query.delay}s` : ''}`,
+        `Fetching users from ReqRes API: page=${page}, per_page=${perPage}${query.delay !== undefined ? `, delay=${query.delay}` : ''}`,
       );
 
       const response = await firstValueFrom(
@@ -45,13 +49,6 @@ export class UsersService {
           },
         }),
       );
-
-      const delaySeconds = query.delay;
-      if (typeof delaySeconds === 'number' && delaySeconds > 0) {
-        await new Promise((resolve) =>
-          setTimeout(resolve, delaySeconds * 1000),
-        );
-      }
 
       return response.data;
     } catch (error) {

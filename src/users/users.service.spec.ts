@@ -134,11 +134,11 @@ describe('UsersService', () => {
       expect(result).toEqual(mockPaginatedResponse);
     });
 
-    it('should apply delay when provided', async () => {
+    it('should include delay parameter when provided', async () => {
       const query: GetUsersQueryDto = {
         page: 1,
         perPage: 6,
-        delay: 1,
+        delay: 5,
       };
       const axiosResponse: AxiosResponse<PaginatedUsersResponse> = {
         data: mockPaginatedResponse,
@@ -150,12 +150,7 @@ describe('UsersService', () => {
 
       jest.spyOn(httpService, 'get').mockReturnValue(of(axiosResponse));
 
-      const startTime = Date.now();
       const result = await service.getUsers(query);
-      const duration = Date.now() - startTime;
-
-      expect(duration).toBeGreaterThanOrEqual(1000);
-      expect(duration).toBeLessThan(1200);
 
       expect(httpService.get).toHaveBeenCalledWith(
         'https://reqres.in/api/users',
@@ -163,6 +158,7 @@ describe('UsersService', () => {
           params: {
             page: 1,
             per_page: 6,
+            delay: 5,
           },
           headers: {
             'x-api-key': 'reqres-free-v1',
