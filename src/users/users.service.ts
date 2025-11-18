@@ -24,21 +24,19 @@ export class UsersService {
   }
 
   async getUsers(query: GetUsersQueryDto): Promise<PaginatedUsersResponse> {
+    const delay = query.delay || 5;
     const page = query.page || 1;
     const perPage = query.perPage || 6;
 
     const params: Record<string, number> = {
+      delay,
       page,
       per_page: perPage,
     };
 
-    if (query.delay !== undefined) {
-      params.delay = query.delay;
-    }
-
     try {
       this.logger.log(
-        `Fetching users from ReqRes API: page=${page}, per_page=${perPage}${query.delay !== undefined ? `, delay=${query.delay}` : ''}`,
+        `Fetching users from ReqRes API: page=${page}, per_page=${perPage}, delay=${delay}`,
       );
 
       const response = await firstValueFrom(
